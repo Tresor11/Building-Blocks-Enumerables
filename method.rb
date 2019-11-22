@@ -68,4 +68,16 @@ module Enumerable
     end
     count
   end
+
+  def my_map(arr)
+    result = []
+    i = 0
+    until i === arr.length
+      if yield(arr[i])
+        result << arr[i]
+      end
+      i += 1
+    end
+    result
+  end
 end
