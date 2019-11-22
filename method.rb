@@ -73,9 +73,7 @@ module Enumerable
     result = []
     i = 0
     until i === arr.length
-      if yield(arr[i])
-        result << arr[i]
-      end
+      result << arr[i]
       i += 1
     end
     result
