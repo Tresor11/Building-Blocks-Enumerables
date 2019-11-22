@@ -15,7 +15,7 @@ module Enumerable
     result = []
     i = 0
     until i == arr.length
-      result << yield(arr[i])
+      result << yield(arr[i], i)
       i += 1
     end
     result
@@ -57,6 +57,18 @@ module Enumerable
     cond
   end
 
+  def my_none(arr)
+    cond = true
+    i = 0
+    until i == arr.length
+      if yield(arr[i])
+        cond = false
+      end
+      i += 1
+    end
+    cond
+  end
+
   def my_count(arr)
     count = 0
     i = 0
@@ -73,7 +85,17 @@ module Enumerable
     result = []
     i = 0
     until i === arr.length
-      result << arr[i]
+      result << yield(arr[i])
+      i += 1
+    end
+    result
+  end
+
+  def my_inject(arr)
+    result = arr[0]
+    i = 1
+    until i === arr.length
+      result = yield(result, arr[i])
       i += 1
     end
     result
