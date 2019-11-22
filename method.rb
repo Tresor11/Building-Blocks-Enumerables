@@ -44,4 +44,28 @@ module Enumerable
     end
     cond
   end
+
+  def my_any(arr)
+    cond = false
+    i = 0
+    until i == arr.length
+      if yield(arr[i])
+        cond = true
+      end
+      i += 1
+    end
+    cond
+  end
+
+  def my_count(arr)
+    count = 0
+    i = 0
+    until i == arr.length
+      if yield(arr[i])
+        count += 1
+      end
+      i += 1
+    end
+    count
+  end
 end
