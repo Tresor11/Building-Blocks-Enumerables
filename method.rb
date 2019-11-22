@@ -22,7 +22,11 @@ module Enumerable
   def select(arr)
     result = []
     i = 0
-    i += 1 while i < arr.length
-    result << arr[i] if yield(arr[i])
+    until i === arr.length
+      if yield(arr[i])
+        result << arr[i]
+      end
+      i += 1
+    end
   end
 end
