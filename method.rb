@@ -1,25 +1,27 @@
 # frozen_string_literal: true
 
 module Enumerable
-  def each(arr)
+  def my_each(arr)
     result = []
     i = 0
     until i == arr.length
       result << yield(arr[i])
       i += 1
     end
+    result
   end
 
-  def each_with_index(arr)
+  def my_each_with_index(arr)
     result = []
     i = 0
     until i == arr.length
       result << yield(arr[i])
       i += 1
     end
+    result
   end
 
-  def select(arr)
+  def my_select(arr)
     result = []
     i = 0
     until i === arr.length
@@ -28,5 +30,18 @@ module Enumerable
       end
       i += 1
     end
+    result
+  end
+
+  def my_all(arr)
+    cond = true
+    i = 0
+    until i == arr.length
+      unless yield(arr[i])
+        cond = false
+      end
+      i += 1
+    end
+    cond
   end
 end
