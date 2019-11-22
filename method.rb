@@ -116,4 +116,23 @@ module Enumerable
     end
     result
   end
+
+  def my_map3(array, prc = nil)
+    result = []
+
+    i = 0
+    while i < array.length
+
+      if block_given?
+        yield(array[i])
+      else
+        result << prc.call(array[i])
+      end
+
+      i += 1
+
+    end
+
+    result
+  end
 end
