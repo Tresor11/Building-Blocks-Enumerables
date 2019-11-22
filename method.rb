@@ -3,9 +3,10 @@
 module Enumerable
   def my_each(arr)
     result = []
-    for i in 0...arr.length - 1
-      result << yield(arr[i])
+    i = 0
+    until i == arr.length
+      res << yield(arr[i])
+      i += 1
     end
-    return result
-  end
+end
 end
