@@ -100,4 +100,20 @@ module Enumerable
     end
     result
   end
+
+  def multiply_els(arr)
+    my_inject(arr) do |x, y|
+      x * y
+    end
+  end
+
+  def my_map2(arr, pro)
+    result = []
+    i = 0
+    until i === arr.length
+      result << pro.call(arr[i])
+      i += 1
+    end
+    result
+  end
 end
