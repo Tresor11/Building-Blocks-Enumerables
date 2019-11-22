@@ -8,5 +8,5 @@ module Enumerable
       res << yield(arr[i])
       i += 1
     end
-end
+  end
 end
