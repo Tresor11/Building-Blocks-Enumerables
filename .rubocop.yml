@@ -29,7 +29,9 @@ Style/CaseEquality:
 Style/IfUnlessModifier:
   Enabled: false
 Metrics/ModuleLength:
-  Enabled: false 
+  Enabled: false
+Style/RedundantSelf:
+  Enabled: false
 
 Layout/AlignHash:
   EnforcedColonStyle: key
