@@ -2,7 +2,7 @@
 
 <br />
 <p align="center">
-   <h3 align="center">Enumerables</h3>
+   <h1 align="center">Enumerables</h1>
 
   <p align="center">
      An enumerable module that works the same way as the original 
