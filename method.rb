@@ -28,7 +28,7 @@ module Enumerable
         end
       end
       arr
-  end
+    end
     self
   end
 
@@ -55,7 +55,7 @@ module Enumerable
       self.my_each do |x|
         return false unless x
       end
-      end
+    end
     true
     end
 
