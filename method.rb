@@ -37,7 +37,7 @@ module Enumerable
       self.my_each do |x|
         return false unless yield(x)
       end
-    elsif pattern != nil
+    elsif !pattern.nil?
       if pattern.is_a?(Class)
         self.my_each do |x|
           return false unless x.is_a?(pattern)
@@ -57,14 +57,14 @@ module Enumerable
       end
     end
     true
-    end
+  end
 
   def my_any?(patter = nil)
     if block_given?
       self.my_each do |x|
         return true if yield(x)
       end
-    elsif patter != nil
+    elsif !patter.nil?
       if patter.is_a?(Class)
         self.my_each do |x|
           return true if x.is_a?(patter)
@@ -82,7 +82,7 @@ module Enumerable
       self.my_each do |x|
         return true if x
       end
-      end
+    end
     false
   end
 
@@ -91,7 +91,7 @@ module Enumerable
       self.my_each do |x|
         return false if yield(x)
       end
-    elsif pat != nil
+    elsif !pat.nil?
       if pat.is_a?(Class)
         self.my_each do |x|
           return false if x.is_a?(pat)
@@ -109,7 +109,7 @@ module Enumerable
       self.my_each do |x|
         return false if x
       end
-      end
+    end
     true
   end
 
@@ -119,29 +119,29 @@ module Enumerable
       self.my_each do |x|
         total += 1 if yield(x)
       end
-    elsif element != nil
+    elsif !element.nil?
       self.my_each do |x|
         total += 1 if x == element
       end
     else
       total = self.size
-      end
+    end
     total
-    end
+  end
 
-    def my_map
-      arr=[]
-      if proc.nil?
-        self.my_each{|x| arr << yield(x)}
-      else 
-        self.my_each{|x| arr << proc.call(x)}
-        end
-        arr
+  def my_map
+    arr = []
+    if proc.nil?
+      self.my_each { |x| arr << yield(x) }
+    else
+      self.my_each { |x| arr << proc.call(x) }
     end
+    arr
+  end
 end
 
 ar = [9, 9, 9, 9, 9, 9, 9, 9, 9]
-fello=Proc.new{|x| x*2}
+fello = Proc.new { |x| x * 2 }
 p ar.my_map.fell
 
 # def my_each_with_index
