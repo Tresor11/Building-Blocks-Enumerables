@@ -138,54 +138,48 @@ module Enumerable
     end
     arr
   end
+
+  def my_inject(init = nil, sym = nil)
+    i = 1
+    if init.nil?
+      init = self[0]
+      i = 1
+    end
+    if init && sym.nil?
+      if init.class == Symbol
+        symbol = init
+        init = self[0]
+        i = 1
+        while i < self.size
+          init = self[i].method(symbol).call(init)
+          i += 1
+        end
+      elsif init.class == Integer
+        while i < self.size
+          init = yield(init, self[i])
+          i += 1
+        end
+      end
+    elsif init && sym
+      i = 0
+      while i < self.size
+        init = self[i].method(sym).call(init)
+        i += 1
+      end
+    elsif !init && !sym
+      raise ArgumentError, 'Incorrect arguments provided'
+    else
+      init = self[0]
+      i = 1
+      while i < self.size
+        init = yield(init, self[i])
+        i += 1
+      end
+    end
+    init
+  end
 end
 
-ar = [9, 9, 9, 9, 9, 9, 9, 9, 9]
-fello = Proc.new { |x| x * 2 }
-p ar.my_map.fell
-
-# def my_each_with_index
-#   i = 0
-#   while i < self.length
-#     yield(self[i], i)
-#     i += 1
-#   end
-#   self
-# end
-
-# def my_all(pattern = nil)
-#   if block_given?
-#     my_each { |x|
-#       return false unless yield x
-#     }
-#   elsif !pattern.nil?
-#     if pattern.is_a?(Regexp)
-#       my_each { |x|
-#         return false unless pattern.match(x.to_s)
-#       }
-#     else
-#       my_each { |x|
-#         return false unless x.is_a?(pattern)
-#       }
-#     end
-#   else
-#     my_each { |x|
-#       return false unless x
-#     }
-#   end
-#   true
-# end
-
-# def my_injection(arg = nil)
-#   start = nil
-#   if arg.nil?
-#     arg = self[0]
-#     start = 1
-#   else
-#     start = 0
-#   end
-#   for i in start...self.size do
-#     arg = yield(arg, self[i])
-#   end
-#   arg
-# end
+def multiply_els(arr)
+  arr.my_inject(:*)
+end
