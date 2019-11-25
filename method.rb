@@ -152,44 +152,64 @@ module Enumerable
     end
   end
 
-  def my_inject(init = nil, sym = nil)
-    i = 1
-    if init.nil?
-      init = self[0]
-      i = 1
+  # def my_inject(init = nil, sym = nil)
+  #   i = 1
+  #   if init.nil?
+  #     init = self[0]
+  #     i = 1
+  #   end
+  #   if init && sym.nil?
+  #     if init.class == Symbol
+  #       symbol = init
+  #       init = self[0]
+  #       i = 1
+  #       while i < self.size
+  #         init = self[i].method(symbol).call(init)
+  #         i += 1
+  #       end
+  #     elsif init.class == Integer
+  #       while i < self.size
+  #         init = yield(init, self[i])
+  #         i += 1
+  #       end
+  #     end
+  #   elsif init && sym
+  #     i = 0
+  #     while i < self.size
+  #       init = self[i].method(sym).call(init)
+  #       i += 1
+  #     end
+  #   elsif !init && !sym
+  #     raise ArgumentError, 'Incorrect arguments provided'
+  #   else
+  #     init = self[0]
+  #     i = 1
+  #     while i < self.size
+  #       init = yield(init, self[i])
+  #       i += 1
+  #     end
+  #   end
+  #   init
+  # end
+  def my_inject(*args)
+    result, sym = inj_param(*args)
+    arr = result ? to_a : to_a[1..-1]
+    result ||= to_a[0]
+    if block_given?
+      arr.my_each { |x| result = yield(result, x) }
+    elsif sym
+      arr.my_each { |x| result = result.public_send(sym, x) }
     end
-    if init && sym.nil?
-      if init.class == Symbol
-        symbol = init
-        init = self[0]
-        i = 1
-        while i < self.size
-          init = self[i].method(symbol).call(init)
-          i += 1
-        end
-      elsif init.class == Integer
-        while i < self.size
-          init = yield(init, self[i])
-          i += 1
-        end
-      end
-    elsif init && sym
-      i = 0
-      while i < self.size
-        init = self[i].method(sym).call(init)
-        i += 1
-      end
-    elsif !init && !sym
-      raise ArgumentError, 'Incorrect arguments provided'
-    else
-      init = self[0]
-      i = 1
-      while i < self.size
-        init = yield(init, self[i])
-        i += 1
-      end
+    result
+  end
+
+  def inj_param(*args)
+    result, sym = nil
+    args.my_each do |arg|
+      result = arg if arg.is_a? Numeric
+      sym = arg unless arg.is_a? Numeric
     end
-    init
+    [result, sym]
   end
 end
 
