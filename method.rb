@@ -2,21 +2,29 @@
 
 module Enumerable
   def my_each
-    i = 0
-    while i < self.size
-      yield self[i]
-      i += 1
+    if block_given?
+      i = 0
+      while i < self.size
+        yield self[i]
+        i += 1
+      end
+      self
+    else
+      to_enum(:my_each)
     end
-    self
   end
 
   def my_each_with_index
-    i = 0
-    while i < self.size
-      yield(self[i], i)
-      i += 1
+    if block_given?
+      i = 0
+      while i < self.size
+        yield(self[i], i)
+        i += 1
+      end
+      self
+    else
+      to_enum(:my_each_with_index)
     end
-    self
   end
 
   def my_select
@@ -28,8 +36,9 @@ module Enumerable
         end
       end
       arr
+    else
+      to_enum(:my_select)
     end
-    arr
   end
 
   def my_all?(pattern = nil)
@@ -130,13 +139,17 @@ module Enumerable
   end
 
   def my_map
-    arr = []
-    if proc.nil?
-      self.my_each { |x| arr << yield(x) }
+    if block_given?
+      arr = []
+      if proc.nil?
+        self.my_each { |x| arr << yield(x) }
+      else
+        self.my_each { |x| arr << proc.call(x) }
+      end
+      arr
     else
-      self.my_each { |x| arr << proc.call(x) }
+      to_enum(:my_map)
     end
-    arr
   end
 
   def my_inject(init = nil, sym = nil)
