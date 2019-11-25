@@ -29,7 +29,7 @@ module Enumerable
       end
       arr
     end
-    self
+    arr
   end
 
   def my_all?(pattern = nil)
